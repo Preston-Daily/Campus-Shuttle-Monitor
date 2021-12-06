@@ -1,0 +1,19 @@
+{
+  "name": "functions",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "start": "npx functions-framework --target=shuttleCoord",
+    "test": "mocha test/*.test.js --timeout=60000"
+  },
+  "devDependencies": {
+    "@google-cloud/functions-framework": "^1.7.1",
+    "@types/express": "^4.17.1"
+  },
+  "dependencies": {
+    "node": "^15.10.0"
+  }
+}
