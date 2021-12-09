@@ -49,7 +49,6 @@ const pathCoordinates = [
 ];
 
 const options = {
-   //styles: mapStyles,
   styles: mapStyles,
   disableDefaultUI: true,
   draggable: true
@@ -74,7 +73,6 @@ function getZoom (width, height) {
 }
 };
 
-var i = 0
 var zoom = getZoom(width, height)
 
 const useFetch = url => {
@@ -102,7 +100,9 @@ const useFetch = url => {
 
 
 export default function App() {
-  const {isLoaded, loadError} = useLoadScript({ googleMapsApiKey: "AIzaSyBNDR5mOl6MbebASdfhTR4eBqwv7fySJEA" })
+  const [value, setValue] = React.useState(0);
+
+  const {isLoaded, loadError} = useLoadScript({ googleMapsApiKey: "AIzaSyAl-m393Vzf4pwpUtJyZrTb1RdtUVRU-_A" })
   
   const data = useFetch('https://realtime-location-gateway-waz932k.uc.gateway.dev/shuttle/IO92')
 
@@ -114,28 +114,39 @@ export default function App() {
   else{
     return (<div>
       <Box
-      bgcolor="grey.200"
+      bgcolor="#003B49"
+      color="white"
+      p={1}
+      position="absolute"
+      top={0}
+      left="0"
+      right="0"
+      borderBottom="4px solid #509E2F"
+      zIndex={2000}
+      >
+        <Typography align='center' variant="h6" component="h1">
+          Miner Village Shuttle Monitor
+        </Typography>
+      </Box>
+
+
+      <Box
+      bgcolor="#003B49"
       color="black"
       p={1}
       position="absolute"
-      top={40}
-      width="2000"
-      left="5%"
-      right="5%"
+      bottom={0}
+      left="0"
+      right="0"
+      borderTop="4px solid #509E2F"
       zIndex={2000}
       >
-        
-        <Typography align='center' variant="h6" component="h2">
-          Hours:
-        </Typography>
-        <Paper>
-          <Typography align='center' variant="subtitle1" component="p">
-            7:30am-10:00am
-            - 2 shuttles
-          </Typography>
-          <Typography align='center' variant="subtitle1" component="p">
-            10:00am -5:00pm
-            - 1 shuttle
+        <Paper align="center">
+          <Typography align='center' variant="subtitle1">
+            <p>
+            7:30am - 5:00pm <br></br>
+            <a href="https://forms.gle/2bXX7ed57Z7ziLGg8" >Please leave us some feedback!</a>
+            </p>
           </Typography>
         </Paper>
         
@@ -170,6 +181,7 @@ export default function App() {
 
         </GoogleMap>
       </Box>
+
     </div>
     );
   }
