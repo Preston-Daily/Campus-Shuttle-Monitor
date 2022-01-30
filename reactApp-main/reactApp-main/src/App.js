@@ -30,6 +30,7 @@ const pathCoordinates = [
   { lat:37.959083,  lng: -91.779101},
   { lat:37.958946,  lng: -91.779283},
   { lat:37.958900,  lng:-91.779962 },
+
   { lat:37.958788, lng:-91.780284 },
   { lat:37.958725, lng:-91.782458 },
   { lat:37.956821, lng:-91.782872 },
@@ -40,6 +41,7 @@ const pathCoordinates = [
   { lat:37.955167,  lng: -91.777112},
   { lat:37.953323,  lng: -91.777112},
   { lat:37.953331,  lng: -91.776581},
+
   { lat:37.953716,  lng: -91.775861},
   { lat:37.953724,  lng: -91.775369},
   { lat:37.954553,  lng: -91.775331},
@@ -100,17 +102,134 @@ const useFetch = url => {
 
 
 export default function App() {
-  const [value, setValue] = React.useState(0);
 
   const {isLoaded, loadError} = useLoadScript({ googleMapsApiKey: "AIzaSyAl-m393Vzf4pwpUtJyZrTb1RdtUVRU-_A" })
   
   const data = useFetch('https://realtime-location-gateway-waz932k.uc.gateway.dev/shuttle/IO92')
 
+  var date = new Date();
+  var n = date.toDateString();
+  var time = date.toLocaleTimeString();
+
   if (loadError) return "Error Loading maps";
   if (!isLoaded) return "Loading Maps";
-  if(!data){
-    return(<h1>Loading Data...</h1>)
-    }
+  if(!data && (n.substring(0, 3) === "Sun" || n.substring(0, 3) === "Sat")){
+    return (<div>
+      <Box
+      bgcolor="#003B49"
+      color="white"
+      p={1}
+      position="absolute"
+      top={0}
+      left="0"
+      right="0"
+      borderBottom="4px solid #509E2F"
+      zIndex={2000}
+      >
+        <Typography align='center' variant="h6" component="h1">
+          Miner Village Shuttle Monitor
+        </Typography>
+      </Box>
+
+      <Box
+      bgcolor="#003B49"
+      color="white"
+      p={1}
+      position="absolute"
+      top="15%"
+      left="15%"
+      right="15%"
+      border="4px solid #FDDA24"
+      zIndex={2000}
+      >
+        <Typography align='center' variant="h5" component="h1">
+          <b>The Shuttle is not currently running. Please check back during operating days Monday through Friday.</b>
+        </Typography>
+      </Box>
+
+      <Box
+      bgcolor="#003B49"
+      color="black"
+      p={1}
+      position="absolute"
+      bottom={0}
+      left="0"
+      right="0"
+      borderTop="4px solid #509E2F"
+      zIndex={2000}
+      >
+        <Paper align="center">
+          <Typography align='center' variant="subtitle1">
+            <p>
+            Mon - Fri <br></br> 7:30am - 5:00pm <br></br>
+            <a href="https://forms.gle/2bXX7ed57Z7ziLGg8" >Please leave us some feedback!</a>
+            </p>
+          </Typography>
+        </Paper>
+        
+      </Box>
+
+    </div>);
+  }
+  else if(!data && (n.substring(0, 3) === "Mon" || n.substring(0, 3) === "Tue" || 
+                    n.substring(0, 3) === "Wed" || n.substring(0, 3) === "Thu" || n.substring(0, 3) === "Fri")){
+    return (<div>
+      <Box
+      bgcolor="#003B49"
+      color="white"
+      p={1}
+      position="absolute"
+      top={0}
+      left="0"
+      right="0"
+      borderBottom="4px solid #509E2F"
+      zIndex={2000}
+      >
+        <Typography align='center' variant="h6" component="h1">
+          Miner Village Shuttle Monitor
+        </Typography>
+      </Box>
+
+      <Box
+      bgcolor="#003B49"
+      color="white"
+      p={1}
+      position="absolute"
+      top="15%"
+      left="15%"
+      right="15%"
+      border="4px solid #FDDA24"
+      zIndex={2000}
+      >
+        <Typography align='center' variant="h5" component="h1">
+          <b>We're sorry, we currently don't have location data for the shuttle.</b>
+        </Typography>
+      </Box>
+
+      <Box
+      bgcolor="#003B49"
+      color="black"
+      p={1}
+      position="absolute"
+      bottom={0}
+      left="0"
+      right="0"
+      borderTop="4px solid #509E2F"
+      zIndex={2000}
+      >
+        <Paper align="center">
+          <Typography align='center' variant="subtitle1">
+            <p>
+            Mon - Fri <br></br> 7:30am - 5:00pm <br></br>
+            <a href="https://forms.gle/2bXX7ed57Z7ziLGg8" >Please leave us some feedback!</a>
+            </p>
+          </Typography>
+        </Paper>
+        
+      </Box>
+
+    </div>);
+  }
   else{
     return (<div>
       <Box
@@ -153,7 +272,7 @@ export default function App() {
       </Box>
 
       <Box zIndex={1800}>
-        <GoogleMap 
+        <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={zoom-1}
         center={center}
